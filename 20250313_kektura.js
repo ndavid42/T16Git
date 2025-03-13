@@ -166,7 +166,7 @@ function legmagasabb(pecsetelohelyek) {
 	let kezdo = 192;
 	let aktualis = 192;
 	let legmagasabb = [192, 0]; //legmagasabb pont, legmagasabb szakasz
-	for (let i = 1; i < pecsetelohelyek.length; i++) {
+	for (let i = 0; i < pecsetelohelyek.length; i++) {
 		let abs = pecsetelohelyek[i].emelkedes - pecsetelohelyek[i].lejtes;
 		aktualis += abs;
 		if (aktualis > legmagasabb[0]) {
