@@ -158,3 +158,25 @@ function vanEHianyos(pecsetelohelyek) {
 }
 
 document.write(`<br><br><hr><br>6) Van-e hiányos szakasz?: ${vanEHianyos(pecsetelohelyek)} `);
+
+
+//7) A túra kezdőmagassága 192 méter volt, ez az első szakasz kezdőmagassága. Ezek alapján próbálja meg megállapítani hol van a túra legmagasabb pontja, és jelenítse meg annak MINDEN adatát!
+
+function legmagasabb(pecsetelohelyek) {
+	let kezdo = 192;
+	let aktualis = 192;
+	let legmagasabb = [192, 0]; //legmagasabb pont, legmagasabb szakasz
+	for (let i = 1; i < pecsetelohelyek.length; i++) {
+		let abs = pecsetelohelyek[i].emelkedes - pecsetelohelyek[i].lejtes;
+		aktualis += abs;
+		if (aktualis > legmagasabb[0]) {
+			legmagasabb[0] = aktualis;
+			legmagasabb[1] = i;
+		}
+	}
+	
+	return legmagasabb;
+}
+
+document.write(`<br><br><hr><br>7) Legmagasabb pont?: ${legmagasabb(pecsetelohelyek)[0]} m, ami a ${legmagasabb(pecsetelohelyek)[1]}. szakaszban van:`);
+kiirEgy(pecsetelohelyek, legmagasabb(pecsetelohelyek)[1]);
