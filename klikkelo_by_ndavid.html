@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>klikkelo 2 by ndavid</title>
+    <style>
+        body {
+            color: white;
+            background-color: #111;
+        }
+
+        .ugralofelirat {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 60px;
+            height: 60px;
+            /* padding: 30px; */
+            font-size: 20px;
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: rgba(0, 0, 0, 0.8);
+            border-radius: 50%;
+            cursor: pointer;
+            -webkit-user-select: none; /* Safari */
+            -ms-user-select: none; /* IE 10 and IE 11 */
+            user-select: none; /* Standard syntax */
+        }
+
+        #szamlalo {
+            position: fixed;
+            top: 0px;
+            left: 50%;
+            width: 50px;
+            height: 30px;
+            transform: translate(-25px);
+            background-color: rgba(0, 0, 0, 0.8);
+            border-bottom-left-radius: 20px;
+            border-bottom-right-radius: 20px;
+            text-align: center;
+        }
+
+        #help {
+            position: absolute;
+            top: 60%;
+            width: 200px;
+            left: calc(calc(100% - 100px) / 2);
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div id="szamlalo">0</div>
+    <div id="help">Tüntesd el az összes pöttyöt!</div>
+    <div class="ugralofelirat"></div>
+
+    <script>
+        document.getElementsByClassName("ugralofelirat")[0].addEventListener("click", ugras);
+        let viewport_width = window.innerWidth;
+        let viewport_height = window.innerHeight;
+        let ugraloWidth_Str = 0;
+        let ugraloWidth_Num = 0;
+        let db = 1;
+
+        function ugras() {            
+            let ugralofeliratok = document.getElementsByClassName("ugralofelirat");
+            let help = document.getElementById("help");
+            if (help != null) {
+                help.remove();
+            }
+            
+            let elem = this;
+
+            ugraloWidth_Str = String(elem.computedStyleMap().get('width'));
+            ugraloWidth_Num = Number(ugraloWidth_Str.replace("px", ""));
+
+            db += Math.floor(Math.random() * 2);
+            document.querySelector("#szamlalo").innerHTML = ugralofeliratok.length + db - 1;
+
+            for (let d = 0; d < db; d++) {
+                addNew();    
+            }
+            elem.remove();
+        }
+
+
+
+        function getRandomPos(limit) {
+            return Math.floor(Math.random() * limit);
+        }
+
+        
+        function addNew() {
+            let top_ = getRandomPos(viewport_height - ugraloWidth_Num) + "px";
+            let left_ = getRandomPos(viewport_width - ugraloWidth_Num) + "px";
+            let red_ = getRandomPos(255);
+            let blue_ = getRandomPos(255);
+            let green_ = getRandomPos(255);
+            let width_ = getRandomPos(20) + 40;
+
+            let newButton = document.createElement('div');
+            // let newButtonContent = document.createTextNode("Katt!");
+            // newButton.appendChild(newButtonContent);
+            newButton.style.cssText = `top: ${top_}; left: ${left_}; width: ${width_}px; height: ${width_}px; background-color: rgba(${red_},${green_},${blue_},.8)`;
+            newButton.classList.add("ugralofelirat");
+            newButton.addEventListener("click", ugras);
+
+            document.body.appendChild(newButton);
+        }
+    </script>
+</body>
+</html> 
