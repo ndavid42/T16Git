@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lottó stat</title>
+    <style>
+        body {
+            background-color: #111;
+            color: #eee;
+        }
+
+        #stat {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            height: 500px;
+            width: 97%;
+            padding: 20px 20px 60px 20px;
+            background-color: #555;
+            border: 1px solid grey;
+        }
+
+        #stat .bar {
+            display: inline;
+            border: 1px solid white;
+            height: 100%;
+            min-width: 5px;
+            align-content: flex-end;
+            background-color: #777;            
+        }
+
+        #stat .num {
+            position: absolute;
+            /* bottom: -10px; */
+            margin-left: -3px;
+            margin-top: 24px;
+            transform: rotate(-90deg);
+        }
+    </style>
+</head>
+<body>
+    <input type="number" id="hany_huzas" placeholder="Hány számhúzás legyen?" min="0" />
+    <button id="general">Generálj!</button>
+    <div id="stat">
+    </div>
+    
+    <script>
+        // Készíts egy függvényt, ami generál lottó számokat
+        // Ne legyen ismétlődés, 5 számot sorsoljon ki...(1-90)
+
+        // Miután ezt megvolt, próbáld meg, valamilyen módon, akár DOM-ban megjeleníteni...
+
+        // A számok generálhatók legyenek, a kihúzott számokról, esetleg készülhet statisztika...
+        // -legnagyobb szám
+        // -legkkisebb szám
+        // -sosem húzott
+        // -legkevesebbszer húzott
+        // -legtöbbet húzott
+
+        console.log("-----------------------------");
+        const MENNYIT = 5;
+        const MENNYIBOL = 90;
+        let hany_huzas = 0;
+
+        let szamStatisztika = new Array(MENNYIBOL);
+        szamStatisztika.fill(0);
+        //console.log("stat: " + szamStatisztika);
+
+        let gombGeneral = document.getElementById("general");
+        gombGeneral.addEventListener("click", main);
+
+
+        function main() {
+            hany_huzas = Number(document.getElementById("hany_huzas").value);
+            for (let i = 0; i < hany_huzas; i++) {
+                szamGeneral();
+            }
+            console.log(`Statisztika ${hany_huzas} számhúzás után: ${szamStatisztika}`);
+
+            drawGraph();
+
+            //vmiféle kirajzolás:
+            let stat_div = document.getElementById("stat");
+            /* let  */
+            /* stat_div. */
+        }
+
+        function szamGeneral() {	
+            let szamok = [];
+            for (let i = 1; i <= MENNYIBOL; i++) {
+                szamok.push(i);
+            }
+                
+            let huzottSzamok = [];
+            for (let j = 0; j < MENNYIT; j++) {
+                let huzottSzam = szamok[Math.floor(Math.random() * szamok.length)];
+                //console.log(`${j+1} húzott szám: ${huzottSzam}`); 
+                huzottSzamok.push(huzottSzam);
+                szamok.splice(szamok.indexOf(huzottSzam), 1);
+                
+                //persze, lehetne úgy is, hogy 1-90-ig random, aztán csekkolni, h ne legyen duplikáció, de sztem ez béna...
+            }
+            
+            //console.log(huzottSzamok);
+            //return huzottSzamok;
+            huzott_to_statisztika(huzottSzamok);
+        }
+
+        function huzott_to_statisztika(huzottSzamok) {
+            for(i = 1; i <= MENNYIT; i++) {
+                szamStatisztika[huzottSzamok[i] - 1]++;
+            }
+            //console.log("statisztika: " + szamStatisztika);
+        }
+
+        function drawGraph(){
+
+            let max = 0;
+            for (let i = 1; i <= MENNYIBOL; i++) {
+                if (szamStatisztika[i] > max) {
+                    max = szamStatisztika[i];
+                }
+            }
+            console.log("max: " + max);
+
+            let statElement = document.getElementById("stat");
+            for (let i = 1; i <= MENNYIBOL; i++) {
+                let height_bar = (szamStatisztika[i] / max) * 100;
+                let div_bar = document.createElement('div');
+                div_bar.classList.add('bar');
+                div_bar.style.cssText = `height: ${height_bar}%`;
+
+                let span_num = document.createElement('span');
+                span_num.classList.add('num');
+
+                let text_content = document.createTextNode(i);
+                span_num.appendChild(text_content);
+                div_bar.appendChild(span_num);
+                statElement.appendChild(div_bar);
+            }
+
+            // <div class="bar"><span class="num">9876</span></div>
+        }
+    </script>
+</body>
+</html>
