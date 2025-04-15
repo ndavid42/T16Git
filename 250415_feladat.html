@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2025.04.15. feladatok * nemethdavid</title>
+    <style>
+        body {
+
+        }
+
+        .negyzet {
+            width: 100px;
+            height: 100px;
+            position: absolute;
+            border: 2px solid blue;
+            background-color: deepskyblue;
+        }
+
+        #f3_cicakep {
+            width: 200px;
+            opacity: 1;
+            transition: opacity 5s;
+        }
+
+    </style>
+</head>
+<body>
+    <h3>1. feladat - aktuális szöveghossz</h3>
+    <input type="text" id="f1_beviteli">
+    <p id="karakterszam"></p>
+    <hr>
+
+    <h3>2. feladat - kirajzoló</h3>
+    <input type="number" min="0" id="f2_x">
+    <input type="number" min="0" id="f2_y">
+    <button id="f2_kirajzol">Kirajzol</button>
+
+    <hr>
+
+    <h3>3. feladat - Bújócska</h3>
+    <img src="hidingCat.jpg" alt="ciccca" title="ciccca" id="f3_cicakep">
+    <button id="f3_cica">Cica!</button>
+    <hr>
+
+    <h3>4. feladat - Hibaüzenetek</h3>
+
+
+    <hr>
+
+    <script>
+        let f1_input = document.getElementById("f1_beviteli");
+        let f1_output = document.getElementById("karakterszam");
+        f1_input.addEventListener("keyup", f1);
+
+        function f1() {
+            f1_output.innerHTML = f1_input.value.length;
+        }
+
+        //---------------------
+ 
+        let f2_button = document.getElementById("f2_kirajzol");
+        f2_button.addEventListener("click", f2);
+     
+        function f2() {
+            let f2_x = Number(document.getElementById("f2_x").value);
+            let f2_y = Number(document.getElementById("f2_y").value);
+            let uj_doboz = document.createElement('div');
+            uj_doboz.classList.add('negyzet');
+            uj_doboz.style.cssText = `top: ${f2_y}px; left: ${f2_x}px`;
+            document.body.appendChild(uj_doboz);
+        }
+    
+        //-----------------------
+
+        let cica_gomb = document.getElementById("cica");
+        cica_gomb.addEventListener("click", f3);
+
+        f3() {
+            let cicakep = document.getElementById("f3_cicakep");
+
+            cicakep.attributes()
+        }
+
+
+    </script>
+</body>
+</html>
